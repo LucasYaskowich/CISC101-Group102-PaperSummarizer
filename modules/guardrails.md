@@ -1,3 +1,7 @@
+Change log: 
+2/12/25: added accommodation for evidence mode
+2/12/25: added section warning messages
+
 # Module: Guardrails
 
 ## Purpose
@@ -37,3 +41,14 @@ Provide rules and fallback behaviors to prevent hallucination, handle edge cases
 ## Error escalation
 - If the module detects that more than 30% of required sections are missing or truncated such that a faithful summary is impossible, abort summarization and return only the Input checks and warnings block with explicit next steps.
 
+---
+
+## Strict Evidence mode 
+- If `evidence_mode` = "strict", then the summarizer should only include information that appears in the provided texrt, nothing else. If it cannot find enough information, it must output the following message: "The text does not provide enough to summarize this section in strict summary mode
+
+---
+
+## Section warning messages
+- If a given section is missing, empty, or too short, the module must output the following warning: "Section too short: summary may not be complete."
+
+  
