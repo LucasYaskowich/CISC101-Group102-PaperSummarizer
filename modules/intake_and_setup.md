@@ -31,18 +31,21 @@ Normalize and validate incoming inputs, prepare the paper for section-wise proce
      - Priority order: Abstract, Introduction, Results, Discussion/Conclusion, Methods, Other sections, References.
      - Truncate or summarize low-priority sections for internal processing only; record which sections were truncated and by how much.
 
-5. **Produce preflight report**
+5. **Summary level assessment**
+     - Based on the inferred needs of the audience, assign a value "short", "normal", or "detailed" to `summary_level` designated by how detailed the summary needs to be.
+    
+6. **Produce preflight report**
    - Short structured block listing:
      - **Normalized sections mapping** (one line per mapping).
      - **Missing or empty sections** (one line per issue).
      - **Sections flagged as short** (one line per issue).
      - **Context window action** (if any): which sections were truncated or deprioritized.
 
-6. **Pass forward**
-   - Provide the cleaned section texts and metadata (section id, start/end offsets, word counts) to the Section Loop module.
+7. **Pass forward**
+   - Provide the cleaned section texts and metadata (section id, start/end offsets, word counts, summary level) to the Section Loop module.
 
 ---
 
 ## Output (to next module)
-- `sections[]` with fields: `id`, `label`, `text`, `word_count`, `status` (OK / MISSING / TOO_SHORT / TRUNCATED).
+- `sections[]` with fields: `id`, `label`, `text`, `word_count`, `status` (OK / MISSING / TOO_SHORT / TRUNCATED), `summary_level` (short / normal / detailed).
 - `preflight_report` (short block for user-facing Input checks and warnings).
