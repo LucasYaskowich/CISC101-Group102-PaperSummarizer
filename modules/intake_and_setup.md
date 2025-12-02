@@ -1,3 +1,6 @@
+Change log: 
+2/12/25: added accomodation for summary_level
+
 # Module: Intake and Setup
 
 ## Purpose
