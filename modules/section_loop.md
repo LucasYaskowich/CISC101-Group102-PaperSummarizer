@@ -1,3 +1,6 @@
+Change log: 
+2/12/25: added accommodation for summary_level
+
 # Module: Section Loop
 
 ## Purpose
