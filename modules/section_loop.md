@@ -6,7 +6,7 @@ Iteratively summarize each section, enforce constraints, and reformulate summari
 ---
 
 ## Inputs
-- `sections[]` from Intake and Setup (each with `id`, `label`, `text`, `word_count`, `status`).
+- `sections[]` from Intake and Setup (each with `id`, `label`, `text`, `word_count`, `status`, `summary_level`).
 - Global constraints: maximum summary length (per user), tone, anti-hallucination rules.
 
 ---
@@ -22,22 +22,26 @@ Iteratively summarize each section, enforce constraints, and reformulate summari
      - Uses only information present in the section (no cross-section inference unless explicitly supported by text).
      - Contains no more than the section-specific word budget (see "Word budget allocation" below).
 
-3. **Constraint checks**
+3. **Summary Level Modes**
+   - If summary_level = "short", ensure that the summaries are each 1-2 sentences.
+   - If summary_level = "detailed", ensure that each paragraph is of a normal length, with an additional bullet point list of 3-5 key points per section.
+
+4. **Constraint checks**
    - Verify **fidelity**: every factual claim must be traceable to a phrase or sentence in the section. If a claim cannot be traced, remove or rephrase it to reflect uncertainty.
    - Verify **word count**: the section summary must not exceed its allocated word budget.
    - Verify **tone** and **format**: formal, academic register; no first-person.
 
-4. **Reformulation loop**
+6. **Reformulation loop**
    - If any check fails, iteratively reformulate the summary:
      - First, remove non-essential qualifiers or examples.
      - Second, compress sentences and prefer noun phrases.
      - Third, if still over budget, prioritize results and conclusions over background details.
    - Repeat until all checks pass or until three reformulation attempts have been made. If still failing, produce the best-compressed valid summary and add a one-line note explaining which constraint could not be fully met.
 
-5. **Traceability mapping**
+7. **Traceability mapping**
    - For each sentence in the section summary, record a minimal trace pointer: `section_id`, `paragraph_number` (or line range) from which the sentence was derived.
 
-6. **Output per section**
+8. **Output per section**
    - `section_summary` (one-paragraph).
    - `summary_word_count`.
    - `trace_pointers[]` for sentences.
